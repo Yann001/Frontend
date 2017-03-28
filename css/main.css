@@ -1,0 +1,44 @@
+.all-canvas {
+	position: relative;
+	width: 400px;
+	height: 500px;
+	margin: auto;
+}
+
+.bg-canvas {
+	border: 1px solid blue;
+	background: steelblue;
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 0;
+}
+
+.main-canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
+}
+
+.message-canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 1;
+}
+
+.setting {
+	text-align: center;
+	margin: 30px;
+}
+
+.setting input[name="operate"] {
+	width: 30px;
+	height: 30px;
+	vertical-align: middle;
+}
+
+.setting label {
+	vertical-align: middle;
+}
