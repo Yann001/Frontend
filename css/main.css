@@ -14,18 +14,19 @@
 	z-index: 0;
 }
 
-.main-canvas {
-	position: absolute;
-	top: 0;
-	left: 0;
-	z-index: 2;
-}
-
 .message-canvas {
 	position: absolute;
 	top: 0;
 	left: 0;
 	z-index: 1;
+}
+
+
+.main-canvas {
+	position: absolute;
+	top: 0;
+	left: 0;
+	z-index: 2;
 }
 
 .setting {
