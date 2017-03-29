@@ -27,6 +27,7 @@
 		mouseY = 0,
 		mouseStatus = "";
 	let isAgain = false;
+	
 	//初始化canvas背景面板
 	bg.drawBackground();
 	//初始化信息提示面板
