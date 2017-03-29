@@ -19,10 +19,43 @@ class App {
 	 * @return 
 	 */
 	init() {
-		var circle = new Circle();
+		let el = document.querySelector(".all-canvas");
+		let canvasWidth = (el.currentStyle ? el.currentStyle : window.getComputedStyle(el, null)).width;
+		let canvasHeight = (el.currentStyle ? el.currentStyle : window.getComputedStyle(el, null)).height;
+		//		let deviceWidth = window.screen.width;
+		//		let deviceHeight = window.screen.height;
+		//		if(deviceWidth <= 414) {
+		//			canvasWidth = deviceWidth;
+		//			canvasHeight = deviceHeight;
+		//		} else {
+		//			canvasWidth = WIDTH;
+		//			canvasHeight = HEIGHT;
+		//		}
+		canvasWidth = parseFloat(canvasWidth);
+		canvasHeight = parseFloat(canvasHeight);
+		canvasWidth = canvasWidth < 640 ? canvasWidth : canvasHeight;
+		document.querySelector(".container").style.width = canvasWidth + "px";
+		WIDTH = canvasWidth;
+		HEIGHT = canvasHeight;
+		UNIT = Math.floor(WIDTH / 10);
+		OUT_RADIUS = UNIT;
+		INNER_RADIUS = UNIT * 0.5;
+		PATH_WIDTH = UNIT * 0.3;
+		this.canvas.width = canvasWidth;
+		this.canvas.height = canvasHeight;
+	}
+	/**
+	 * 绘制背景
+	 * @method drawBackground
+	 * @for App
+	 * @param 
+	 * @return 
+	 */
+	drawBackground() {
+		let circle = new Circle();
 		for(let row = 0; row < 3; row++) {
 			for(let col = 0; col < 3; col++) {
-				circle.draw(this.context, 80 + 120 * col, 100 + 120 * row, OUT_RADIUS, PAINT_COLOR);
+				circle.draw(this.context, UNIT * 2 + UNIT * 3 * col, UNIT * 2 + UNIT * 3 * row, OUT_RADIUS, PAINT_COLOR);
 			}
 		}
 	}
@@ -67,10 +100,10 @@ class App {
 		let line = new Line();
 		let len = pointArr.length;
 		if(len !== 0) {
-			circle.drawSolid(this.context, pointArr[0].x, pointArr[0].y, INNER_RADIUS, "red");
+			circle.drawSolid(this.context, pointArr[0].x, pointArr[0].y, INNER_RADIUS, "#e74c3c");
 			for(let i = 0; i < len - 1; i++) {
-				line.draw(this.context, pointArr[i].x, pointArr[i].y, pointArr[i + 1].x, pointArr[i + 1].y, PATH_WIDTH, "red");
-				circle.drawSolid(this.context, pointArr[i + 1].x, pointArr[i + 1].y, INNER_RADIUS, "red");
+				line.draw(this.context, pointArr[i].x, pointArr[i].y, pointArr[i + 1].x, pointArr[i + 1].y, PATH_WIDTH, "#e74c3c");
+				circle.drawSolid(this.context, pointArr[i + 1].x, pointArr[i + 1].y, INNER_RADIUS, "#e74c3c");
 			}
 		}
 	}

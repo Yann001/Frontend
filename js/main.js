@@ -7,14 +7,18 @@
  */
 (function strat() {
 	let bg = new App("bg-canvas");
+	bg.init();
 	let app = new App("main-canvas");
+	app.init();
 	let message = new App("message-canvas");
+	message.init();
+
 	let circle = new Circle();
 	let line = new Line();
 	let util = new Util();
 	let data = new Data();
-	let words = new Text();
 	let dom = new Dom();
+
 	let userpwd = [],
 		temppwd = [];
 	let pathPoint = [];
@@ -24,40 +28,52 @@
 		mouseStatus = "";
 	let isAgain = false;
 	//初始化canvas背景面板
-	bg.init();
+	bg.drawBackground();
 	//初始化信息提示面板
-	words.write(message.context, FONT, MSG_INPUT, 100, 450, FONT_COLOR);
+	dom.setText("info", MSG_INPUT);
 	//绑定canvas事件
 	bindCanvasEvent(app.canvas);
 	//单选按钮点击事件
-	document.getElementsByClassName("setting")[0].addEventListener("click", function(e) {
-		words.write(message.context, FONT, MSG_INPUT, 100, 450, FONT_COLOR);
+	document.querySelector(".setting").addEventListener("click", function(e) {
+		dom.setText("info", MSG_INPUT);
 	}, false);
+	//绑定转屏事件
+	window.addEventListener('orientationchange', function(e) {
+		orient();
+	});
 
 	function bindCanvasEvent(canvasObj) {
 		//PC端鼠标事件
 		canvasObj.addEventListener("mousemove", function(e) {
+
 			if(mouseStatus === "DOWN") {
 				drawPassword(e);
-			} else if(mouseStatus === "") {;
 			} else if(mouseStatus === "UP") {
-				verifyPassword();
+				if(pathPoint.length) {
+					verifyPassword();
+				}
 			}
 		}, false);
 		canvasObj.addEventListener("mousedown", function(e) {
 			mouseStatus = "DOWN";
+			drawPassword(e);
 		}, false);
 		canvasObj.addEventListener("mouseup", function(e) {
+			console.log('up');
 			mouseStatus = "UP";
 		}, false);
 		//移动端触摸事件
-		canvasObj.addEventListener("touchstart", function(e) {;
+		canvasObj.addEventListener("touchstart", function(e) {
+			e.preventDefault();
+			drawPassword(e);
 		}, false);
 		canvasObj.addEventListener("touchmove", function(e) {
 			drawPassword(e);
 		}, false);
 		canvasObj.addEventListener("touchend", function(e) {
-			verifyPassword();
+			if(pathPoint.length) {
+				verifyPassword();
+			}
 		}, false);
 
 	}
@@ -80,7 +96,10 @@
 			//画密码路径
 			app.drawPath(pathPoint);
 			//画最后跟随鼠标部分路径
-			line.draw(app.context, pathPoint[pathPoint.length - 1].x, pathPoint[pathPoint.length - 1].y, mx, my, PATH_WIDTH, PAINT_COLOR);
+			if(pathPoint.length) {
+				line.draw(app.context, pathPoint[pathPoint.length - 1].x, pathPoint[pathPoint.length - 1].y, mx, my, PATH_WIDTH, PAINT_COLOR);
+			}
+
 		}
 	}
 
@@ -94,27 +113,34 @@
 		if(operate === "SET") {
 			if(!isAgain) {
 				if(userpwd.length < 5) {
-					words.write(message.context, FONT, MSG_SHORT, 100, 450, FONT_COLOR);
+					dom.setText("info", MSG_SHORT);
 				} else {
 					temppwd = userpwd;
-					words.write(message.context, FONT, MSG_AGAIN, 100, 450, FONT_COLOR);
+					dom.setText("info", MSG_AGAIN);
 					isAgain = true;
 				}
 			} else if(isAgain) {
 				if(userpwd.join("") === temppwd.join("")) {
-					words.write(message.context, FONT, MSG_SUCCESS, 100, 450, FONT_COLOR);
+					dom.setText("info", MSG_SUCCESS);
 					data.savePassword(userpwd);
 				} else {
-					words.write(message.context, FONT, MSG_DIFF, 100, 450, FONT_COLOR);
+					dom.setText("info", MSG_DIFF);
+					app.errorDrawPath(pathPoint);
+					setTimeout(function() {
+						dom.setText("info", MSG_FRESH);
+					}, 1000);
 				}
 				isAgain = false;
 			}
 		} else if(operate === "VALIDATE") {
 			if(userpwd.join("") === data.getPassword()) {
-				words.write(message.context, FONT, MSG_RIGHT, 100, 450, FONT_COLOR);
+				dom.setText("info", MSG_RIGHT);
 			} else {
-				words.write(message.context, FONT, MSG_ERROR, 100, 450, FONT_COLOR);
+				dom.setText("info", MSG_ERROR);
 				app.errorDrawPath(pathPoint);
+				setTimeout(function() {
+					dom.setText("info", MSG_FRESH);
+				}, 1000);
 			}
 		}
 		setTimeout(function() {
@@ -125,4 +151,10 @@
 		mouseStatus = "";
 	}
 
+	function orient() {
+		var orientation = window.orientation;
+		if(orientation == 90 || orientation == -90) {
+			alert("请使用竖屏访问！");
+		}
+	}
 })();

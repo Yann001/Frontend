@@ -3,22 +3,27 @@
 
 	<head>
 		<meta charset="utf-8" />
+		<meta name="viewport" content="width=device-width,target-densitydpi=high-dpi,initial-scale=1.0, minimum-scale=1.0, maximum-scale=1.0" />
 		<title></title>
 		<link rel="stylesheet" type="text/css" href="css/main.css"/>
 	</head>
 
 	<body>
 		<div class="container">
+			<div class="title">
+				<h2>手势密码</h2>
+			</div>
 			<div class="all-canvas">
-				<canvas id="bg-canvas" class="bg-canvas" width="400" height="500">请使用支持canvas的浏览器运行</canvas>				
-				<canvas id="message-canvas" class="message-canvas" width="400" height="500">请使用支持canvas的浏览器运行</canvas>
-				<canvas id="main-canvas" class="main-canvas" width="400" height="500">请使用支持canvas的浏览器运行</canvas>
+				<canvas id="bg-canvas" class="bg-canvas">请使用支持canvas的浏览器运行</canvas>				
+				<canvas id="message-canvas" class="message-canvas">请使用支持canvas的浏览器运行</canvas>
+				<canvas id="main-canvas" class="main-canvas">请使用支持canvas的浏览器运行</canvas>
+			</div>
+			<div class="info">
+				<h3 id="info"></h3>
 			</div>
 			<div class="setting">
-				<input type="radio" name="operate" value="set" checked />
-				<label>设置密码</label>
-				<input type="radio" name="operate" value="validate" />
-				<label>验证密码</label>
+				<label><input type="radio" name="operate" value="set" checked />设置密码</label>
+				<label><input type="radio" name="operate" value="validate" />验证密码</label>
 			</div>
 		</div>
 		<script src="js/config.js" type="text/javascript" charset="utf-8"></script>

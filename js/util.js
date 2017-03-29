@@ -34,8 +34,8 @@ class Util {
 		for(let row = 0; row < 3; row++) {
 			for(let col = 0; col < 3; col++) {
 				let point = {};
-				point.x = 80 + 120 * col;
-				point.y = 100 + 120 * row;
+				point.x = UNIT * 2 + UNIT * 3 * col;
+				point.y = UNIT * 2 + UNIT * 3 * row;
 				pointArr.push(point);
 			}
 		}
@@ -61,48 +61,57 @@ class Util {
 	pointToNumber(point) {
 		let numstr = point.x.toString() + point.y.toString();
 		let num = 0;
+		let one = UNIT * 2 + "" + UNIT * 2;
+		let two = UNIT * 5 + "" + UNIT * 2;
+		let three = UNIT * 8 + "" + UNIT * 2;
+		let four = UNIT * 2 + "" + UNIT * 5;
+		let five = UNIT * 5 + "" + UNIT * 5;
+		let six = UNIT * 8 + "" + UNIT * 5;
+		let seven = UNIT * 2 + "" + UNIT * 8;
+		let eight = UNIT * 5 + "" + UNIT * 8;
+		let nine = UNIT * 8 + "" + UNIT * 8;
 		switch(numstr) {
-			case "80100":
+			case one:
 				{
 					num = 1;
 					break;
 				}
-			case "200100":
+			case two:
 				{
 					num = 2;
 					break;
 				}
-			case "320100":
+			case three:
 				{
 					num = 3;
 					break;
 				}
-			case "80220":
+			case four:
 				{
 					num = 4;
 					break;
 				}
-			case "200220":
+			case five:
 				{
 					num = 5;
 					break;
 				}
-			case "320220":
+			case six:
 				{
 					num = 6;
 					break;
 				}
-			case "80340":
+			case seven:
 				{
 					num = 7;
 					break;
 				}
-			case "200340":
+			case eight:
 				{
 					num = 8;
 					break;
 				}
-			case "320340":
+			case nine:
 				{
 					num = 9;
 					break;
@@ -119,9 +128,9 @@ class Util {
 	 * @param {Array} 圆心坐标对象数组
 	 * @return {Number} 对应数字密码数组
 	 */
-	pointArrToNumber(pointArr){
-		let nums=[];
-		for(let i=0;i<pointArr.length;i++){
+	pointArrToNumber(pointArr) {
+		let nums = [];
+		for(let i = 0; i < pointArr.length; i++) {
 			nums.push(this.pointToNumber(pointArr[i]));
 		}
 		return nums;
