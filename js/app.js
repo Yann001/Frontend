@@ -22,15 +22,6 @@ class App {
 		let el = document.querySelector(".all-canvas");
 		let canvasWidth = (el.currentStyle ? el.currentStyle : window.getComputedStyle(el, null)).width;
 		let canvasHeight = (el.currentStyle ? el.currentStyle : window.getComputedStyle(el, null)).height;
-		//		let deviceWidth = window.screen.width;
-		//		let deviceHeight = window.screen.height;
-		//		if(deviceWidth <= 414) {
-		//			canvasWidth = deviceWidth;
-		//			canvasHeight = deviceHeight;
-		//		} else {
-		//			canvasWidth = WIDTH;
-		//			canvasHeight = HEIGHT;
-		//		}
 		canvasWidth = parseFloat(canvasWidth);
 		canvasHeight = parseFloat(canvasHeight);
 		canvasWidth = canvasWidth < 640 ? canvasWidth : canvasHeight;
